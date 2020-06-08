@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Import Material Icons -->
+        <link
+            href="../node_modules/material-icons/iconfont/material-icons.css"
+            rel="stylesheet"
+        />
+        <!-- Import Materialize CSS -->
+        <link
+            type="text/css"
+            rel="stylesheet"
+            href="../node_modules/materialize-css/dist/css/materialize.min.css"
+        />
+        <title>Simple Caspar Client | Operations View</title>
+    </head>
+    <body class="grey darken-4">
+        <div style="height: 20px;"></div>
+        <div class="row">
+            <!-- Slot A Styling -->
+            <div class="col s6">
+                <div class="card grey darken-3">
+                    <div class="card-content white-text">
+                        <span class="card-title"
+                            ><strong>Lower Third - Slot A</strong>
+                        </span>
+                        <button
+                            class="btn-floating halfway-fab waves-effect waves-light blue-grey lighten-1"
+                        >
+                            <i class="material-icons">add</i>
+                        </button>
+                        <!-- Form A -->
+                        <form id="lt-a">
+                            <div class="input-field">
+                                <input
+                                    type="text"
+                                    placeholder="text goes here..."
+                                    id="a-line1"
+                                    class="white-text"
+                                />
+                                <label for="a-line1">Line 1</label>
+                            </div>
+                            <div class="input-field">
+                                <input
+                                    type="text"
+                                    placeholder="text goes here..."
+                                    id="a-line2"
+                                    class="white-text"
+                                />
+                                <label for="a-line2">Line 2</label>
+                            </div>
+                        </form>
+                        <div class="card-action">
+                            <div class="row">
+                                <div class="col s3">
+                                    <button
+                                        class="btn waves-effect green darken-3"
+                                    >
+                                        <i class="material-icons right"
+                                            >play_arrow</i
+                                        >
+                                        PLAY
+                                    </button>
+                                </div>
+                                <div class="col s3">
+                                    <button
+                                        class="btn waves-effect red darken-2"
+                                    >
+                                        <i class="material-icons right">stop</i>
+                                        STOP
+                                    </button>
+                                </div>
+                                <div class="col s3">
+                                    <button
+                                        class="btn waves-effect blue darken-4"
+                                    >
+                                        <i class="material-icons right"
+                                            >skip_next</i
+                                        >
+                                        AUTO PLAY
+                                    </button>
+                                </div>
+                                <div
+                                    class="col s2"
+                                    style="height: 36px !important;"
+                                >
+                                    <div
+                                        class="input-field inline"
+                                        style="margin: 0px; height: 36px;"
+                                    >
+                                        <input
+                                            value="5"
+                                            style="
+                                                height: 36px;
+                                                margin-bottom: 5px;
+                                            "
+                                            type="number"
+                                            id="a-ap-interval"
+                                            class="validate white-text"
+                                        />
+                                        <span
+                                            class="helper-text grey-text text-lighten-2"
+                                            >Seconds</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End Slot A Card-->
+            <!-- Slot B Styling -->
+            <div class="col s6">
+                <div class="card grey darken-3">
+                    <div class="card-content white-text">
+                        <span class="card-title"
+                            ><strong>Lower Third - Slot B</strong>
+                        </span>
+                        <button
+                            class="btn-floating halfway-fab waves-effect waves-light blue-grey lighten-1"
+                        >
+                            <i class="material-icons">add</i>
+                        </button>
+                        <!-- Form A -->
+                        <form id="lt-b">
+                            <div class="input-field">
+                                <input
+                                    type="text"
+                                    placeholder="text goes here..."
+                                    id="b-line1"
+                                    class="white-text"
+                                />
+                                <label for="b-line1">Line 1</label>
+                            </div>
+                            <div class="input-field">
+                                <input
+                                    type="text"
+                                    placeholder="text goes here..."
+                                    id="b-line2"
+                                    class="white-text"
+                                />
+                                <label for="b-line2">Line 2</label>
+                            </div>
+                        </form>
+                        <div class="card-action">
+                            <div class="row">
+                                <div class="col s3">
+                                    <button
+                                        class="btn waves-effect green darken-3"
+                                    >
+                                        <i class="material-icons right"
+                                            >play_arrow</i
+                                        >
+                                        PLAY
+                                    </button>
+                                </div>
+                                <div class="col s3">
+                                    <button
+                                        class="btn waves-effect red darken-2"
+                                    >
+                                        <i class="material-icons right">stop</i>
+                                        STOP
+                                    </button>
+                                </div>
+                                <div class="col s3">
+                                    <button
+                                        class="btn waves-effect blue darken-4"
+                                    >
+                                        <i class="material-icons right"
+                                            >skip_next</i
+                                        >
+                                        AUTO PLAY
+                                    </button>
+                                </div>
+                                <div
+                                    class="col s2"
+                                    style="height: 36px !important;"
+                                >
+                                    <div
+                                        class="input-field inline"
+                                        style="margin: 0px; height: 36px;"
+                                    >
+                                        <input
+                                            value="5"
+                                            style="
+                                                height: 36px;
+                                                margin-bottom: 5px;
+                                            "
+                                            type="number"
+                                            id="b-ap-interval"
+                                            class="validate white-text"
+                                        />
+                                        <span
+                                            class="helper-text grey-text text-lighten-2"
+                                            >Seconds</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End Slot B Card-->
+        </div>
+        <!-- End Grid -->
+    </body>
+
+    <!-- Import Materialize Javascript -->
+    <script
+        type="text/javascript"
+        src="../node_modules/materialize-css/dist/js/materialize.min.js"
+    ></script>
+</html>
