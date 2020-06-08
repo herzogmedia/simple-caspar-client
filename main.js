@@ -13,7 +13,7 @@ function createMainWindow() {
     mainWindow = new BrowserWindow({
         title: 'Simple Caspar Client',
         width: isDev ? 1800 : 1100,
-        height: 600,
+        height: 850,
         // icon: './assets/icons/icon.png',
         resizable: isDev ? true : false,
         backgroundColor: 'white',
