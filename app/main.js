@@ -23,7 +23,7 @@ function createMainWindow() {
         mainWindow.webContents.openDevTools();
     }
 
-    mainWindow.loadFile('./app/index.html');
+    mainWindow.loadFile('./app/public/index.html');
 }
 
 app.on('ready', () => {

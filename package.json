@@ -3,7 +3,7 @@
     "productName": "Simple Caspar Client",
     "version": "1.0.0",
     "description": "Simple CasparCG Client for Lower Thirds and the like",
-    "main": "main.js",
+    "main": "app/main.js",
     "scripts": {
         "start": "electron .",
         "dev": "nodemon --exec electron .",
