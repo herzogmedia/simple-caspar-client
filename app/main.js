@@ -32,7 +32,27 @@ function createMainWindow() {
 
 // Settings Window
 function createSettingsWindow() {
-    sett;
+    settingsWindow = new BrowserWindow({
+        title: 'Settings',
+        width: isDev ? 1050 : 350,
+        height: 850,
+        resizable: isDev ? true : false,
+        backgroundColor: 'white',
+    });
+
+    if (isDev) {
+        settingsWindow.webContents.openDevTools();
+    }
+
+    settingsWindow.loadFile('./app/public/settings.html');
+
+    // Hide Menu for Settings Window
+    settingsWindow.setMenuBarVisibility(false);
+
+    // Garbage Collection
+    settingsWindow.on('close', () => {
+        settingsWindow = null;
+    });
 }
 
 // ---- Run on App Start ----//
@@ -52,6 +72,9 @@ const menu = [
         submenu: [
             {
                 label: 'Settings',
+                click() {
+                    createSettingsWindow();
+                },
             },
             {
                 label: 'Quit',
@@ -80,9 +103,6 @@ const menu = [
             },
             {
                 label: 'Clear Library',
-                click() {
-                    createSettingsWindow();
-                },
             },
         ],
     },
