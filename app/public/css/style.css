@@ -41,3 +41,17 @@ textarea.materialize-textarea:focus:not([readonly]) {
 p.smaller {
     font-size: 0.9rem;
 }
+
+/* Manual margin down */
+.m-down {
+    margin-bottom: 2rem;
+}
+
+/* change colour of filled in check box */
+.switch label input[type='checkbox']:checked + .lever {
+    background-color: #9c6600;
+}
+
+.switch label input[type='checkbox']:checked + .lever:after {
+    background-color: #ffa500;
+}
