@@ -14,6 +14,7 @@ cgsSaveBtn.addEventListener('click', setCGServerSettings);
 
 function getCGServerSettings() {
     const settings = window.getCGSsettings();
+    // console.log('get');
     return settings;
 }
 
@@ -21,12 +22,14 @@ function populateCGServerSettings(settings) {
     cgsIP.value = settings.cgsIP;
     cgsPort.value = settings.cgsPort;
     cgsQueue.value = settings.cgsQueue;
+    // console.log('populate');
 }
 
 function resetCGServerSettings(e) {
     window.resetCGSsettings();
     const cgsSettings = getCGServerSettings();
     populateCGServerSettings(cgsSettings);
+    window.cgsReconnect();
     e.preventDefault();
 }
 
@@ -35,9 +38,10 @@ function setCGServerSettings(e) {
     const newSettings = {
         cgsIP: cgsIP.value,
         cgsPort: parseInt(cgsPort.value),
-        cgsQueue: parseInt(cgsQueue.value),
+        cgsQueue: parseInt(cgsQueue.value)
     };
     window.setCGSsettings(newSettings);
+    window.cgsReconnect();
 }
 
 //Global Functions

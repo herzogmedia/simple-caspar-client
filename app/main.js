@@ -1,14 +1,18 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const electron = require('electron');
 const log = require('electron-log');
 const settings = require('./import/settings');
 const path = require('path');
 const CG = require('./import/casparcg');
+const { cgsReconnect } = require('./import/cgs-helpers');
 
 // Set env
 process.env.NODE_ENV = 'development';
 
 const isDev = process.env.NODE_ENV !== 'production' ? true : false;
 const isMac = process.platform === 'darwin' ? true : false;
+
+const { app, BrowserWindow, Menu } = electron;
+const ipc = electron.ipcMain;
 
 let mainWindow;
 let settingsWindow;
@@ -77,6 +81,21 @@ app.on('ready', () => {
     log.info('App loaded.');
 });
 
+//---- IPC ----//
+ipc.on('cg', (event, arg) => {
+    switch (arg) {
+        case 'reconnect':
+            cgsReconnect();
+            log.debug('IPC Main: Reconnect CG-Server');
+            break;
+        default:
+            log.error(
+                `IPC Main Process: Argument "${arg}" for event "cg" not valid`
+            );
+            break;
+    }
+});
+
 // Menu Template
 const menu = [
     ...(isMac ? [{ role: 'appMenu' }] : []),
@@ -104,7 +123,10 @@ const menu = [
                 label: 'Clear CG-Channels'
             },
             {
-                label: 'Reconnect CG-Server'
+                label: 'Reconnect CG-Server',
+                click() {
+                    cgsReconnect();
+                }
             }
         ]
     },
