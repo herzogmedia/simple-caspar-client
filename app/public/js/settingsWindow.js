@@ -1,28 +1,51 @@
-// Initialize Materialize Select
-document.addEventListener('DOMContentLoaded', function () {
-    const elems = document.querySelectorAll('select');
-    const instances = M.FormSelect.init(elems);
-});
-
 //----- Selectors ------//
 const cgsForm = document.querySelector('#cg-server-settings');
 const cgsIP = document.querySelector('#cgs-ip');
 const cgsPort = document.querySelector('#cgs-port');
 const cgsQueue = document.querySelector('#cgs-queuemode');
+const cgsResetBtn = document.querySelector('#cgs-reset');
+const cgsSaveBtn = document.querySelector('#cgs-save');
+
+//----- Event Listeners -------//
+cgsResetBtn.addEventListener('click', resetCGServerSettings);
+cgsSaveBtn.addEventListener('click', setCGServerSettings);
 
 //----- CG Server Setting ------//
 
 function getCGServerSettings() {
     const settings = window.getCGSsettings();
-    console.log(settings);
     return settings;
 }
 
-function populateCGServerSettings() {
-    const settings = getCGServerSettings();
+function populateCGServerSettings(settings) {
     cgsIP.value = settings.cgsIP;
     cgsPort.value = settings.cgsPort;
-    cgsQueue.value = settings.cgsQueue.toString();
+    cgsQueue.value = settings.cgsQueue;
 }
 
-populateCGServerSettings();
+function resetCGServerSettings(e) {
+    window.resetCGSsettings();
+    const cgsSettings = getCGServerSettings();
+    populateCGServerSettings(cgsSettings);
+    e.preventDefault();
+}
+
+function setCGServerSettings(e) {
+    e.preventDefault();
+    const newSettings = {
+        cgsIP: cgsIP.value,
+        cgsPort: parseInt(cgsPort.value),
+        cgsQueue: parseInt(cgsQueue.value),
+    };
+    window.setCGSsettings(newSettings);
+}
+
+//Global Functions
+
+function initializeSettingsWindow() {
+    const cgsSettings = getCGServerSettings();
+    populateCGServerSettings(cgsSettings);
+}
+
+// Initialize on Load
+initializeSettingsWindow();

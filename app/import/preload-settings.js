@@ -13,7 +13,6 @@ window.getCGSsettings = function () {
         cgsPort,
         cgsQueue,
     };
-    console.log(cgsSettings);
     return cgsSettings;
 };
 
@@ -30,4 +29,5 @@ window.resetCGSsettings = () => {
     settings.set('cgsServer.IP', '127.0.0.1');
     settings.set('cgsServer.Port', 5250);
     settings.set('cgsServer.Queue', 1); //Enum (Salvo)
+    log.info('CGS-Settings reset to default');
 };
