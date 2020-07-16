@@ -1,5 +1,6 @@
 const { CasparCG } = require('casparcg-connection');
 const settings = require('./settings');
+const log = require('electron-log');
 
 //Get CasparCG Settings
 const cgsIP = settings.get('cgsServer.IP');
@@ -11,4 +12,12 @@ module.exports = new CasparCG({
     port: cgsPort,
     autoConnect: false,
     queueMode: cgsQueue,
+    autoReconnectInterval: 5000,
+    onError: (err) => {
+        log.error(`CasparCG-Error: ${err}`);
+    },
+    onConnectionStatus: (data) => {
+        const status = data.connected ? 'connected' : 'disconnected';
+        log.info(`CasparCG-Server ${status}.`);
+    }
 });
