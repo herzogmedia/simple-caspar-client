@@ -35,3 +35,9 @@ textarea.materialize-textarea:focus:not([readonly]) {
 .select-wrapper input.select-dropdown:focus {
     border-bottom: 1px solid #ffa500;
 }
+
+/* Smaller Text */
+
+p.smaller {
+    font-size: 0.9rem;
+}
