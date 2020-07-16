@@ -38,6 +38,10 @@ const schema = {
                 min: 1,
                 default: 20,
             },
+            SendJSON: {
+                type: 'boolean',
+                default: false,
+            },
         },
         SlotB: {
             Name: {
@@ -56,6 +60,10 @@ const schema = {
                 type: 'integer',
                 min: 1,
                 default: 20,
+            },
+            SendJSON: {
+                type: 'boolean',
+                default: false,
             },
         },
     },
