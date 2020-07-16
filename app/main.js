@@ -2,6 +2,7 @@ const { app, BrowserWindow, Menu } = require('electron');
 const log = require('electron-log');
 const settings = require('./import/settings');
 const path = require('path');
+const CG = require('./import/casparcg');
 
 // Set env
 process.env.NODE_ENV = 'development';
@@ -22,7 +23,7 @@ function createMainWindow() {
         height: 850,
         // icon: './assets/icons/icon.png',
         resizable: isDev ? true : false,
-        backgroundColor: 'white',
+        backgroundColor: 'white'
     });
 
     if (isDev) {
@@ -43,8 +44,8 @@ function createSettingsWindow() {
         webPreferences: {
             contextIsolation: false,
             nodeIntegration: false,
-            preload: path.join(__dirname, 'import', 'preload-settings.js'),
-        },
+            preload: path.join(__dirname, 'import', 'preload-settings.js')
+        }
     });
 
     if (isDev) {
@@ -69,6 +70,11 @@ app.on('ready', () => {
 
     const mainMenu = Menu.buildFromTemplate(menu);
     Menu.setApplicationMenu(mainMenu);
+
+    // Connect to CG-Server
+    CG.connect();
+
+    log.info('App loaded.');
 });
 
 // Menu Template
@@ -81,37 +87,37 @@ const menu = [
                 label: 'Settings',
                 click() {
                     createSettingsWindow();
-                },
+                }
             },
             {
                 label: 'Quit',
                 click() {
                     app.quit();
-                },
-            },
-        ],
+                }
+            }
+        ]
     },
     {
         label: 'CG-Server',
         submenu: [
             {
-                label: 'Clear CG-Channels',
+                label: 'Clear CG-Channels'
             },
             {
-                label: 'Reconnect CG-Server',
-            },
-        ],
+                label: 'Reconnect CG-Server'
+            }
+        ]
     },
     {
         label: 'Library',
         submenu: [
             {
-                label: 'Show Library',
+                label: 'Show Library'
             },
             {
-                label: 'Clear Library',
-            },
-        ],
+                label: 'Clear Library'
+            }
+        ]
     },
     ...(isDev
         ? [
@@ -121,15 +127,17 @@ const menu = [
                       { role: 'reload' },
                       { role: 'forcereload' },
                       { type: 'separator' },
-                      { role: 'toggledevtools' },
-                  ],
-              },
+                      { role: 'toggledevtools' }
+                  ]
+              }
           ]
-        : []),
+        : [])
 ];
 
+// Quit app and disconnect if all windows are closed
 app.on('window-all-closed', () => {
     if (!isMac) {
+        CG.disconnect();
         app.quit();
     }
 });
