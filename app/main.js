@@ -1,5 +1,7 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const log = require('electron-log');
+const settings = require('./import/settings');
+const path = require('path');
 
 // Set env
 process.env.NODE_ENV = 'development';
@@ -38,6 +40,11 @@ function createSettingsWindow() {
         height: 850,
         resizable: isDev ? true : false,
         backgroundColor: 'white',
+        webPreferences: {
+            contextIsolation: false,
+            nodeIntegration: false,
+            preload: path.join(__dirname, 'import', 'preload-settings.js'),
+        },
     });
 
     if (isDev) {
