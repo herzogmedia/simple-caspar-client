@@ -1,8 +1,37 @@
-* {
-  box-sizing: border-box;
+/* Change Form Select Color */
+.select-dropdown {
+    color: #fff;
 }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  line-height: 1.6;
+ul.dropdown-content.select-dropdown li span {
+    color: #000;
+}
+
+/* Change formfield label focus color  */
+.input-field input:focus + label {
+    color: #ffa500 !important;
+}
+
+/* Change formfield underline focus color */
+input:not([type]):focus:not([readonly]),
+input[type='text']:not(.browser-default):focus:not([readonly]),
+input[type='password']:not(.browser-default):focus:not([readonly]),
+input[type='email']:not(.browser-default):focus:not([readonly]),
+input[type='url']:not(.browser-default):focus:not([readonly]),
+input[type='time']:not(.browser-default):focus:not([readonly]),
+input[type='date']:not(.browser-default):focus:not([readonly]),
+input[type='datetime']:not(.browser-default):focus:not([readonly]),
+input[type='datetime-local']:not(.browser-default):focus:not([readonly]),
+input[type='tel']:not(.browser-default):focus:not([readonly]),
+input[type='number']:not(.browser-default):focus:not([readonly]),
+input[type='search']:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #ffa500;
+    -webkit-box-shadow: 0 1px 0 0 #ffa500;
+    box-shadow: 0 1px 0 0 #ffa500;
+}
+
+/* Change formfield select unterline focus color */
+.select-wrapper input.select-dropdown:focus {
+    border-bottom: 1px solid #ffa500;
 }
