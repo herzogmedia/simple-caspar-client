@@ -8,7 +8,11 @@ const isDev = process.env.NODE_ENV !== 'production' ? true : false;
 const isMac = process.platform === 'darwin' ? true : false;
 
 let mainWindow;
+let settingsWindow;
 
+// ---- Create Windows Functions ----//
+
+// Main Window
 function createMainWindow() {
     mainWindow = new BrowserWindow({
         title: 'Simple Caspar Client',
@@ -26,6 +30,13 @@ function createMainWindow() {
     mainWindow.loadFile('./app/public/index.html');
 }
 
+// Settings Window
+function createSettingsWindow() {
+    sett;
+}
+
+// ---- Run on App Start ----//
+
 app.on('ready', () => {
     createMainWindow();
 
@@ -33,10 +44,47 @@ app.on('ready', () => {
     Menu.setApplicationMenu(mainMenu);
 });
 
+// Menu Template
 const menu = [
     ...(isMac ? [{ role: 'appMenu' }] : []),
     {
-        role: 'fileMenu',
+        label: 'App',
+        submenu: [
+            {
+                label: 'Settings',
+            },
+            {
+                label: 'Quit',
+                click() {
+                    app.quit();
+                },
+            },
+        ],
+    },
+    {
+        label: 'CG-Server',
+        submenu: [
+            {
+                label: 'Clear CG-Channels',
+            },
+            {
+                label: 'Reconnect CG-Server',
+            },
+        ],
+    },
+    {
+        label: 'Library',
+        submenu: [
+            {
+                label: 'Show Library',
+            },
+            {
+                label: 'Clear Library',
+                click() {
+                    createSettingsWindow();
+                },
+            },
+        ],
     },
     ...(isDev
         ? [
