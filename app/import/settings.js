@@ -69,9 +69,34 @@ const schema = {
     },
 };
 
+const defaults = {
+    cgsServer: {
+        IP: '127.0.0.1',
+        Port: 5250,
+        Queue: 1,
+    },
+    cgtTemplate: {
+        SlotA: {
+            Name: '',
+            Key1: 'f0',
+            Key2: 'f1',
+            Layer: 20,
+            SendJSON: false,
+        },
+        SlotB: {
+            Name: '',
+            Key1: 'f0',
+            Key2: 'f1',
+            Layer: 20,
+            SendJSON: false,
+        },
+    },
+};
+
 module.exports = new Store({
     name: 'settings',
     fileExtension: 'config',
     watch: true,
-    schema: schema,
+    schema,
+    defaults,
 });
