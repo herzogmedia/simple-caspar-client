@@ -36,6 +36,17 @@ textarea.materialize-textarea:focus:not([readonly]) {
     border-bottom: 1px solid #ffa500;
 }
 
+select {
+    margin: 0.5rem 0;
+    background-color: #636363;
+    border: none;
+    color: white;
+}
+
+select:focus {
+    outline: 1px solid #ffa500;
+}
+
 /* Smaller Text */
 
 p.smaller {

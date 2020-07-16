@@ -45,13 +45,11 @@
                                 />
                                 <label for="cgs-port">CG-Server Port</label>
                             </div>
-                            <div class="input-field">
-                                <select id="cgs-queuemode">
-                                    <option value="1">SALVO</option>
-                                    <option value="2">SEQUENTIAL</option>
-                                </select>
-                                <label>CG-Server Queue Mode</label>
-                            </div>
+                            <label>CG-Server Queue Mode</label>
+                            <select class="browser-default" id="cgs-queuemode">
+                                <option value="1">SALVO</option>
+                                <option value="2">SEQUENTIAL</option>
+                            </select>
                             <p class="grey-text text-lighten-1 smaller">
                                 <em>
                                     SALVO is the standard queue mode for
@@ -75,7 +73,7 @@
                             </button>
                             <button
                                 class="btn waves-effect red darken-3"
-                                id="cgs-safe"
+                                id="cgs-save"
                             >
                                 <i class="material-icons right">save</i>
                                 SAVE
@@ -101,13 +99,12 @@
                         <form id="cgt-form">
                             <!-- Slot A -->
                             <h6 class="m-down">Lower Third - Slot A</h6>
-                            <div class="input-field">
-                                <select
-                                    name="template-a"
-                                    id="cgt-template-a"
-                                ></select>
-                                <label for="cgt-template-a">Template</label>
-                            </div>
+                            <label for="cgt-template-a">Template</label>
+                            <select
+                                class="browser-default"
+                                name="template-a"
+                                id="cgt-template-a"
+                            ></select>
                             <div class="input-field">
                                 <input
                                     type="text"
@@ -150,13 +147,12 @@
                             </div>
                             <!-- Slot B -->
                             <h6 class="m-down">Lower Third - Slot B</h6>
-                            <div class="input-field">
-                                <select
-                                    name="template-b"
-                                    id="cgt-template-b"
-                                ></select>
-                                <label for="cgt-template-b">Template</label>
-                            </div>
+                            <label for="cgt-template-b">Template</label>
+                            <select
+                                class="browser-default"
+                                name="template-b"
+                                id="cgt-template-b"
+                            ></select>
                             <div class="input-field">
                                 <input
                                     type="text"
