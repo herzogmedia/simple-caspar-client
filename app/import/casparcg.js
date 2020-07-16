@@ -12,7 +12,7 @@ module.exports = new CasparCG({
     port: cgsPort,
     autoConnect: false,
     queueMode: cgsQueue,
-    autoReconnectInterval: 5000,
+    autoReconnectInterval: 10000, // 10 sec
     onError: (err) => {
         log.error(`CasparCG-Error: ${err}`);
     },
