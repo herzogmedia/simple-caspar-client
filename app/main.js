@@ -6,7 +6,8 @@ const CG = require('./import/casparcg');
 const {
     cgsReconnect,
     cgsConnectionHandler,
-    cgsGetConnectionSettings
+    cgsGetConnectionSettings,
+    cgsGetTemplates
 } = require('./import/cgs-helpers');
 
 const { app, BrowserWindow, Menu } = electron;
@@ -105,6 +106,13 @@ ipc.on('cg', (event, arg) => {
         case 'reconnect':
             cgsReconnect();
             log.debug('IPC Main: Reconnect CG-Server');
+            break;
+        case 'getTemplates':
+            cgsGetTemplates()
+                .then((templates) => {
+                    event.returnValue = templates;
+                })
+                .catch((err) => log.error(err));
             break;
         default:
             log.error(

@@ -50,7 +50,34 @@ function cgsConnectionHandler(connected) {
     });
 }
 
+function cgsGetTemplates() {
+    return new Promise((resolve, reject) => {
+        let templates = [];
+        if (CG.connected) {
+            CG.tls()
+                .then((res) => {
+                    templates.push('');
+                    const data = res.response.data;
+                    data.forEach((item) => {
+                        if (item.type === 'template') {
+                            templates.push(item.name);
+                        }
+                    });
+                    resolve(templates);
+                })
+                .catch((err) => {
+                    log.error(err);
+                    templates = [];
+                    resolve(templates);
+                });
+        } else {
+            resolve(templates);
+        }
+    });
+}
+
 //Exports
 module.exports.cgsReconnect = cgsReconnect;
 module.exports.cgsConnectionHandler = cgsConnectionHandler;
 module.exports.cgsGetConnectionSettings = cgsGetConnectionSettings;
+module.exports.cgsGetTemplates = cgsGetTemplates;

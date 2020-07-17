@@ -5,6 +5,8 @@ const cgsPort = document.querySelector('#cgs-port');
 const cgsQueue = document.querySelector('#cgs-queuemode');
 const cgsResetBtn = document.querySelector('#cgs-reset');
 const cgsSaveBtn = document.querySelector('#cgs-save');
+const cgtTemplateA = document.querySelector('#cgt-template-a');
+const cgtTemplateB = document.querySelector('#cgt-template-b');
 
 //----- Event Listeners -------//
 cgsResetBtn.addEventListener('click', resetCGServerSettings);
@@ -44,11 +46,30 @@ function setCGServerSettings(e) {
     window.cgsReconnect();
 }
 
+function populateTemplateSelects(templates) {
+    if (templates.length > 0) {
+        let options;
+        templates.forEach((template) => {
+            options += `<option>${template}</option>`;
+        });
+        cgtTemplateA.innerHTML = options;
+        cgtTemplateB.innerHTML = options;
+    }
+}
+
+function getCGServerTemplates() {
+    window
+        .cgsGetTemplates()
+        .then((templates) => populateTemplateSelects(templates))
+        .catch((err) => console.log(err));
+}
+
 //Global Functions
 
 function initializeSettingsWindow() {
     const cgsSettings = getCGServerSettings();
     populateCGServerSettings(cgsSettings);
+    getCGServerTemplates();
 }
 
 // Initialize on Load

@@ -41,3 +41,15 @@ window.cgsReconnect = () => {
     // log.debug('IPC Renderer: Reconnect CG-Server');
     // console.log('reconnect');
 };
+
+// Get Templates
+window.cgsGetTemplates = () => {
+    return new Promise((resolve, reject) => {
+        const templates = ipc.sendSync('cg', 'getTemplates');
+        if (templates !== undefined) {
+            resolve(templates);
+        } else {
+            reject(log.error('Variable templates is undefined.'));
+        }
+    });
+};
