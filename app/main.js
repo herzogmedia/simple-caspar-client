@@ -5,14 +5,14 @@ const path = require('path');
 const CG = require('./import/casparcg');
 const { cgsReconnect, cgsConnectionHandler } = require('./import/cgs-helpers');
 
+const { app, BrowserWindow, Menu } = electron;
+const ipc = electron.ipcMain;
+
 // Set env
 process.env.NODE_ENV = 'development';
 
 const isDev = process.env.NODE_ENV !== 'production' ? true : false;
 const isMac = process.platform === 'darwin' ? true : false;
-
-const { app, BrowserWindow, Menu } = electron;
-const ipc = electron.ipcMain;
 
 let mainWindow;
 let settingsWindow;
@@ -100,7 +100,12 @@ ipc.on('cg', (event, arg) => {
 });
 
 // Listen for CG-Connection Change
-CG.onConnectionChanged = (connected) => cgsConnectionHandler(connected);
+CG.onConnectionChanged = (connected) =>
+    cgsConnectionHandler(connected)
+        .then((connection) =>
+            mainWindow.webContents.send('cgsConnection', connection)
+        )
+        .catch((err) => log.error(err));
 
 // Menu Template
 const menu = [
