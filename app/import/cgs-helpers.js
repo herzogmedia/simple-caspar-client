@@ -38,13 +38,15 @@ function cgsConnectionHandler(connected) {
                     const version = res.response.data;
                     connection.version = version;
                     log.info(`CasparCG-Server Version: ${version}`);
+                    resolve(connection);
                 })
                 .catch((err) => {
                     log.error(`Error getting CG-Server Version: ${err}`);
                     reject(err);
                 });
+        } else {
+            resolve(connection);
         }
-        resolve(connection);
     });
 }
 
