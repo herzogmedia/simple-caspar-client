@@ -31,7 +31,11 @@ function createMainWindow() {
         height: 850,
         // icon: './assets/icons/icon.png',
         resizable: isDev ? true : false,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        webPreferences: {
+            contextIsolation: false,
+            nodeIntegration: true
+        }
     });
 
     if (isDev) {
@@ -79,16 +83,18 @@ app.on('ready', () => {
     const mainMenu = Menu.buildFromTemplate(menu);
     Menu.setApplicationMenu(mainMenu);
 
-    // get connections settings here and throw them to main window
-    cgsGetConnectionSettings()
-        .then((connection) => {
-            connection.connected = false;
-            mainWindow.webContents.send('cgsConnection', connection);
-        })
-        .catch((err) => log.error(err));
+    // Get Connection Status on Startup and pass it to Main Window
+    mainWindow.webContents.on('dom-ready', () => {
+        cgsGetConnectionSettings()
+            .then((connection) => {
+                connection.connected = false;
+                mainWindow.webContents.send('cgsConnection', connection);
+            })
+            .catch((err) => log.error(err));
 
-    // Connect to CG-Server
-    CG.connect();
+        // Connect to CG-Server
+        CG.connect();
+    });
 
     log.info('App loaded.');
 });
