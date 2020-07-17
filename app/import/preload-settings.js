@@ -53,3 +53,9 @@ window.cgsGetTemplates = () => {
         }
     });
 };
+
+// Get Template Settings
+window.cgtGetTemplateSettings = () => {
+    const templateSettings = settings.get('cgtTemplate');
+    return templateSettings;
+};
