@@ -6,33 +6,27 @@ const ipc = require('electron').ipcRenderer;
 
 // Get Settings
 window.getCGSsettings = () => {
-    const cgsIP = settings.get('cgsServer.IP');
-    const cgsPort = settings.get('cgsServer.Port');
-    const cgsQueue = settings.get('cgsServer.Queue');
-    const cgsSettings = {
-        cgsIP,
-        cgsPort,
-        cgsQueue
-    };
+    const cgsSettings = settings.get('cgsServer');
     return cgsSettings;
 };
 
 // Set Settings
 window.setCGSsettings = (newSettings) => {
-    settings.set('cgsServer.IP', newSettings.cgsIP);
-    settings.set('cgsServer.Port', newSettings.cgsPort);
-    settings.set('cgsServer.Queue', newSettings.cgsQueue);
-    log.info('CGS-Settings stored');
+    settings.set('cgsServer', newSettings);
+    log.info('CasparCG Server Settings stored');
     // console.log('Set');
 };
 
 // Restore to default
 window.resetCGSsettings = () => {
-    settings.set('cgsServer.IP', '127.0.0.1');
-    settings.set('cgsServer.Port', 5250);
-    settings.set('cgsServer.Queue', 1); //Enum (Salvo)
-    log.info('CGS-Settings reset to default');
-    // console.log('reset');
+    const newSettings = {
+        IP: '127.0.0.1',
+        Port: 5250,
+        Queue: 1
+    };
+    settings.set('cgsServer', newSettings);
+    log.info('CasparCG Server Settings reset to default');
+    return newSettings;
 };
 
 // Reconnect CG-Server
@@ -58,4 +52,33 @@ window.cgsGetTemplates = () => {
 window.cgtGetTemplateSettings = () => {
     const templateSettings = settings.get('cgtTemplate');
     return templateSettings;
+};
+
+// Set Template Settings
+window.cgtSetSettings = (newSettings) => {
+    settings.set('cgtTemplate', newSettings);
+    log.info('CasparCG Template Settings stored.');
+};
+
+// Reset Template Settings
+window.cgtResetSettings = () => {
+    const newSettings = {
+        SlotA: {
+            Name: '',
+            Key1: 'f0',
+            Key2: 'f1',
+            Layer: 20,
+            SendJSON: false
+        },
+        SlotB: {
+            Name: '',
+            Key1: 'f0',
+            Key2: 'f1',
+            Layer: 20,
+            SendJSON: false
+        }
+    };
+    settings.set('cgtTemplate', newSettings);
+    log.info('CasparCG Template Setting reset to default.');
+    return newSettings;
 };

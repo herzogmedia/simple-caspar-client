@@ -5,6 +5,7 @@ const cgsForm = document.querySelector('#cg-server-settings');
 const cgsIP = document.querySelector('#cgs-ip');
 const cgsPort = document.querySelector('#cgs-port');
 const cgsQueue = document.querySelector('#cgs-queuemode');
+
 const cgsResetBtn = document.querySelector('#cgs-reset');
 const cgsSaveBtn = document.querySelector('#cgs-save');
 // Slot A
@@ -21,11 +22,13 @@ const cgtLayerB = document.querySelector('#cgt-layer-b');
 const cgtJsonB = document.querySelector('#cgt-datatype-b');
 
 const cgtSaveBtn = document.querySelector('#cgt-save');
+const cgtResetBtn = document.querySelector('#cgt-reset');
 
 //----- Event Listeners -------//
 cgsResetBtn.addEventListener('click', resetCGServerSettings);
 cgsSaveBtn.addEventListener('click', setCGServerSettings);
 
+cgtResetBtn.addEventListener('click', resetCGTemplateSettings);
 cgtSaveBtn.addEventListener('click', setCGTemplateSettings);
 
 //----- CG Server Setting ------//
@@ -37,29 +40,30 @@ function getCGServerSettings() {
 }
 
 function populateCGServerSettings(settings) {
-    cgsIP.value = settings.cgsIP;
-    cgsPort.value = settings.cgsPort;
-    cgsQueue.value = settings.cgsQueue;
+    cgsIP.value = settings.IP;
+    cgsPort.value = settings.Port;
+    cgsQueue.value = settings.Queue;
     // console.log('populate');
 }
 
 function resetCGServerSettings(e) {
-    window.resetCGSsettings();
-    const cgsSettings = getCGServerSettings();
+    e.preventDefault();
+    const cgsSettings = window.resetCGSsettings();
     populateCGServerSettings(cgsSettings);
     window.cgsReconnect();
-    e.preventDefault();
+    getCGServerTemplates();
 }
 
 function setCGServerSettings(e) {
     e.preventDefault();
     const newSettings = {
-        cgsIP: cgsIP.value,
-        cgsPort: parseInt(cgsPort.value),
-        cgsQueue: parseInt(cgsQueue.value)
+        IP: cgsIP.value,
+        Port: parseInt(cgsPort.value),
+        Queue: parseInt(cgsQueue.value)
     };
     window.setCGSsettings(newSettings);
     window.cgsReconnect();
+    getCGServerTemplates();
 }
 
 //----- Slot Settings ------//
@@ -87,7 +91,7 @@ function getCGTemplateSettings() {
     return templateSettings;
 }
 
-function poplulateCGTemplateSettings(settings) {
+function populateCGTemplateSettings(settings) {
     // Slot A
     cgtTemplateA.value = settings.SlotA.Name;
     cgtKey1A.value = settings.SlotA.Key1;
@@ -102,7 +106,32 @@ function poplulateCGTemplateSettings(settings) {
     cgtJsonB.checked = settings.SlotB.SendJSON;
 }
 
-function setCGTemplateSettings() {}
+function setCGTemplateSettings(e) {
+    e.preventDefault;
+    const newSettings = {
+        SlotA: {
+            Name: cgtTemplateA.value,
+            Key1: cgtKey1A.value,
+            Key2: cgtKey2A.value,
+            Layer: parseInt(cgtLayerA.value),
+            SendJSON: cgtJsonA.checked
+        },
+        SlotB: {
+            Name: cgtTemplateB.value,
+            Key1: cgtKey1B.value,
+            Key2: cgtKey2B.value,
+            Layer: parseInt(cgtLayerB.value),
+            SendJSON: cgtJsonB.checked
+        }
+    };
+    window.cgtSetSettings(newSettings);
+}
+
+function resetCGTemplateSettings(e) {
+    e.preventDefault;
+    const newSettings = window.cgtResetSettings();
+    populateCGTemplateSettings(newSettings);
+}
 
 //Global Functions
 
@@ -111,7 +140,7 @@ function initializeSettingsWindow() {
     populateCGServerSettings(cgsSettings);
     getCGServerTemplates();
     const cgtSettings = getCGTemplateSettings();
-    poplulateCGTemplateSettings(cgtSettings);
+    populateCGTemplateSettings(cgtSettings);
 }
 // Initialize on Load
 initializeSettingsWindow();
