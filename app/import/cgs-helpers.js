@@ -14,10 +14,19 @@ function cgsReconnect() {
     });
 }
 
+function cgsGetConnectionSettings() {
+    return new Promise((resolve, reject) => {
+        let connection = {
+            IP: settings.get('cgsServer.IP'),
+            Port: settings.get('cgsServer.Port')
+        };
+        resolve(connection);
+    });
+}
+
 // Handle CGS-Connection Events
 function cgsConnectionHandler(connected) {
     return new Promise((resolve, reject) => {
-        global.cgsConnected = connected;
         let connection = {
             connected,
             IP: settings.get('cgsServer.IP'),
@@ -42,3 +51,4 @@ function cgsConnectionHandler(connected) {
 //Exports
 module.exports.cgsReconnect = cgsReconnect;
 module.exports.cgsConnectionHandler = cgsConnectionHandler;
+module.exports.cgsGetConnectionSettings = cgsGetConnectionSettings;
