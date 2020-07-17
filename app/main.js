@@ -3,7 +3,7 @@ const log = require('electron-log');
 const settings = require('./import/settings');
 const path = require('path');
 const CG = require('./import/casparcg');
-const { cgsReconnect } = require('./import/cgs-helpers');
+const { cgsReconnect, cgsConnectionHandler } = require('./import/cgs-helpers');
 
 // Set env
 process.env.NODE_ENV = 'development';
@@ -75,6 +75,9 @@ app.on('ready', () => {
     const mainMenu = Menu.buildFromTemplate(menu);
     Menu.setApplicationMenu(mainMenu);
 
+    // Reset connection status
+    global.cgsConnected = false;
+
     // Connect to CG-Server
     CG.connect();
 
@@ -95,6 +98,9 @@ ipc.on('cg', (event, arg) => {
             break;
     }
 });
+
+// Listen for CG-Connection Change
+CG.onConnectionChanged = (connected) => cgsConnectionHandler(connected);
 
 // Menu Template
 const menu = [

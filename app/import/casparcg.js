@@ -7,6 +7,7 @@ const cgsIP = settings.get('cgsServer.IP');
 const cgsPort = settings.get('cgsServer.Port');
 const cgsQueue = settings.get('cgsServer.Queue');
 
+//Initiate Server Connection
 module.exports = new CasparCG({
     host: cgsIP,
     port: cgsPort,
@@ -18,6 +19,6 @@ module.exports = new CasparCG({
     },
     onConnectionStatus: (data) => {
         const status = data.connected ? 'connected' : 'disconnected';
-        log.info(`CasparCG-Server ${status}.`);
+        log.info(`CasparCG-Server ${status} on ${cgsIP}:${cgsPort}.`);
     }
 });
