@@ -76,8 +76,32 @@ function cgsGetTemplates() {
     });
 }
 
+// Play
+function cgPlay(templateData) {
+    let cgtSettings;
+    switch (templateData.slot.toLowerCase()) {
+        case 'a':
+            cgtSettings = settings.get('cgtTemplate.SlotA');
+            break;
+        case 'b':
+            cgtSettings = settings.get('cgtTemplate.SlotB');
+            break;
+        default:
+            log.error('Slot Var is neither a nor b');
+            break;
+    }
+    const { Name, Key1, Key2, Layer, SendJSON } = cgtSettings;
+    let data = {};
+    if (SendJSON) {
+        data[Key1] = templateData.line1;
+        data[Key2] = templateData.line2;
+    }
+    CG.cgAdd(1, Layer, 1, Name, true, data).catch((err) => log.error(err));
+}
+
 //Exports
 module.exports.cgsReconnect = cgsReconnect;
 module.exports.cgsConnectionHandler = cgsConnectionHandler;
 module.exports.cgsGetConnectionSettings = cgsGetConnectionSettings;
 module.exports.cgsGetTemplates = cgsGetTemplates;
+module.exports.cgPlay = cgPlay;
