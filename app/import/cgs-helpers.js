@@ -76,6 +76,14 @@ function cgsGetTemplates() {
     });
 }
 
+// Parse as CasparCG XML String
+function parseCasparXML(templateData, Key1, Key2) {
+    const { line1, line2 } = templateData;
+    const data = `<templateData><componentData id="${Key1}"><data id="text" value="${line1}"/></componentData>
+    <componentData id="${Key2}"><data id="text" value="${line2}"/></componentData></templateData>`;
+    return data;
+}
+
 // Play
 function cgsPlay(templateData) {
     let cgtSettings;
@@ -91,10 +99,13 @@ function cgsPlay(templateData) {
             break;
     }
     const { Name, Key1, Key2, Layer, SendJSON } = cgtSettings;
-    let data = {};
+    let data;
     if (SendJSON) {
+        data = {};
         data[Key1] = templateData.line1;
         data[Key2] = templateData.line2;
+    } else {
+        data = parseCasparXML(templateData, Key1, Key2);
     }
     CG.cgAdd(1, Layer, 1, Name, true, data).catch((err) => log.error(err));
 }
@@ -118,7 +129,7 @@ function cgsStop(templateData) {
 
 function cgsAuto(templateData) {
     const duration = templateData.duration * 1000;
-    log.debug(`Auto-Play A Duration ${duration} ms`);
+    log.debug(`Auto-Play A Duration ${duration}ms`);
     cgsPlay(templateData);
     log.debug('Auto-Play A: Play');
     setTimeout(() => {
