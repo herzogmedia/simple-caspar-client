@@ -13,6 +13,7 @@ const stopA = document.querySelector('#stop-a');
 const autoA = document.querySelector('#auto-a');
 const line1A = document.querySelector('#a-line1');
 const line2A = document.querySelector('#a-line2');
+const durationA = document.querySelector('#a-ap-interval');
 
 //----- Event Listeners ------//
 // Listen for Status Changes
@@ -23,7 +24,7 @@ ipc.on('cgsConnection', (event, connection) => {
 // Slot A Buttons
 playA.addEventListener('click', playSlotA);
 stopA.addEventListener('click', stopSlotA);
-// autoA.addEventListener('click', autoSlotA);
+autoA.addEventListener('click', autoSlotA);
 
 //-----Playout Function -------//
 
@@ -43,6 +44,17 @@ function stopSlotA(e) {
         slot: 'A'
     };
     ipc.send('cg-stop', playData);
+}
+
+function autoSlotA(e) {
+    e.preventDefault();
+    const playData = {
+        slot: 'A',
+        line1: line1A.value,
+        line2: line2A.value,
+        duration: parseInt(durationA.value)
+    };
+    ipc.send('cg-auto', playData);
 }
 
 // populate Status Fields

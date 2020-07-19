@@ -116,6 +116,17 @@ function cgsStop(templateData) {
     CG.cgStop(1, Layer, 1).catch((err) => log.error(err));
 }
 
+function cgsAuto(templateData) {
+    const duration = templateData.duration * 1000;
+    log.debug(`Auto-Play A Duration ${duration} ms`);
+    cgsPlay(templateData);
+    log.debug('Auto-Play A: Play');
+    setTimeout(() => {
+        cgsStop(templateData);
+        log.debug('Auto-Play A: Stop');
+    }, duration);
+}
+
 //Exports
 module.exports.cgsReconnect = cgsReconnect;
 module.exports.cgsConnectionHandler = cgsConnectionHandler;
@@ -123,3 +134,4 @@ module.exports.cgsGetConnectionSettings = cgsGetConnectionSettings;
 module.exports.cgsGetTemplates = cgsGetTemplates;
 module.exports.cgsPlay = cgsPlay;
 module.exports.cgsStop = cgsStop;
+module.exports.cgsAuto = cgsAuto;
