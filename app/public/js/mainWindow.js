@@ -22,7 +22,7 @@ ipc.on('cgsConnection', (event, connection) => {
 
 // Slot A Buttons
 playA.addEventListener('click', playSlotA);
-// stopA.addEventListener('click', stopSlotA);
+stopA.addEventListener('click', stopSlotA);
 // autoA.addEventListener('click', autoSlotA);
 
 //-----Playout Function -------//
@@ -35,6 +35,14 @@ function playSlotA(e) {
         line2: line2A.value
     };
     ipc.send('cg-play', playData);
+}
+
+function stopSlotA(e) {
+    e.preventDefault();
+    const playData = {
+        slot: 'A'
+    };
+    ipc.send('cg-stop', playData);
 }
 
 // populate Status Fields

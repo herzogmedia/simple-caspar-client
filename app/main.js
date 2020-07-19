@@ -8,7 +8,8 @@ const {
     cgsConnectionHandler,
     cgsGetConnectionSettings,
     cgsGetTemplates,
-    cgPlay
+    cgsPlay,
+    cgsStop
 } = require('./import/cgs-helpers');
 
 const { app, BrowserWindow, Menu } = electron;
@@ -124,7 +125,11 @@ ipc.on('cg', (event, arg) => {
 });
 
 ipc.on('cg-play', (event, arg) => {
-    cgPlay(arg);
+    cgsPlay(arg);
+});
+
+ipc.on('cg-stop', (event, arg) => {
+    cgsStop(arg);
 });
 
 // Listen for CG-Connection Change

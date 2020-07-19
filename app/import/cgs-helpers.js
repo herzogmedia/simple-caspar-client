@@ -77,7 +77,7 @@ function cgsGetTemplates() {
 }
 
 // Play
-function cgPlay(templateData) {
+function cgsPlay(templateData) {
     let cgtSettings;
     switch (templateData.slot.toLowerCase()) {
         case 'a':
@@ -87,7 +87,7 @@ function cgPlay(templateData) {
             cgtSettings = settings.get('cgtTemplate.SlotB');
             break;
         default:
-            log.error('Slot Var is neither a nor b');
+            log.error('CG Play: Slot Var is neither a nor b');
             break;
     }
     const { Name, Key1, Key2, Layer, SendJSON } = cgtSettings;
@@ -99,9 +99,27 @@ function cgPlay(templateData) {
     CG.cgAdd(1, Layer, 1, Name, true, data).catch((err) => log.error(err));
 }
 
+function cgsStop(templateData) {
+    let cgtLayer;
+    switch (templateData.slot.toLowerCase()) {
+        case 'a':
+            cgtLayer = settings.get('cgtTemplate.SlotA.Layer');
+            break;
+        case 'b':
+            cgtLayer = settings.get('cgtTemplate.SlotA.Layer');
+            break;
+        default:
+            log.error('CG Sop: Slot Var is neither a nor b');
+            break;
+    }
+    const Layer = parseInt(cgtLayer);
+    CG.cgStop(1, Layer, 1).catch((err) => log.error(err));
+}
+
 //Exports
 module.exports.cgsReconnect = cgsReconnect;
 module.exports.cgsConnectionHandler = cgsConnectionHandler;
 module.exports.cgsGetConnectionSettings = cgsGetConnectionSettings;
 module.exports.cgsGetTemplates = cgsGetTemplates;
-module.exports.cgPlay = cgPlay;
+module.exports.cgsPlay = cgsPlay;
+module.exports.cgsStop = cgsStop;
