@@ -15,6 +15,14 @@ const line1A = document.querySelector('#a-line1');
 const line2A = document.querySelector('#a-line2');
 const durationA = document.querySelector('#a-ap-interval');
 
+// Slot B
+const playB = document.querySelector('#play-b');
+const stopB = document.querySelector('#stop-b');
+const autoB = document.querySelector('#auto-b');
+const line1B = document.querySelector('#b-line1');
+const line2B = document.querySelector('#b-line2');
+const durationB = document.querySelector('#b-ap-interval');
+
 //----- Event Listeners ------//
 // Listen for Status Changes
 ipc.on('cgsConnection', (event, connection) => {
@@ -26,7 +34,12 @@ playA.addEventListener('click', playSlotA);
 stopA.addEventListener('click', stopSlotA);
 autoA.addEventListener('click', autoSlotA);
 
-//-----Playout Function -------//
+// Slot A Buttons
+playB.addEventListener('click', playSlotB);
+stopB.addEventListener('click', stopSlotB);
+autoB.addEventListener('click', autoSlotB);
+
+//-----Playout Function SLOT A -------//
 
 function playSlotA(e) {
     e.preventDefault();
@@ -53,6 +66,37 @@ function autoSlotA(e) {
         line1: line1A.value,
         line2: line2A.value,
         duration: parseInt(durationA.value)
+    };
+    ipc.send('cg-auto', playData);
+}
+
+//-----Playout Function SLOT B -------//
+
+function playSlotB(e) {
+    e.preventDefault();
+    const playData = {
+        slot: 'B',
+        line1: line1B.value,
+        line2: line2B.value
+    };
+    ipc.send('cg-play', playData);
+}
+
+function stopSlotB(e) {
+    e.preventDefault();
+    const playData = {
+        slot: 'B'
+    };
+    ipc.send('cg-stop', playData);
+}
+
+function autoSlotB(e) {
+    e.preventDefault();
+    const playData = {
+        slot: 'B',
+        line1: line1B.value,
+        line2: line2B.value,
+        duration: parseInt(durationB.value)
     };
     ipc.send('cg-auto', playData);
 }

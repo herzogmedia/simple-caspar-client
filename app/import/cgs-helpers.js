@@ -116,7 +116,7 @@ function cgsStop(templateData) {
             cgtLayer = settings.get('cgtTemplate.SlotA.Layer');
             break;
         case 'b':
-            cgtLayer = settings.get('cgtTemplate.SlotA.Layer');
+            cgtLayer = settings.get('cgtTemplate.SlotB.Layer');
             break;
         default:
             log.error('CG Sop: Slot Var is neither a nor b');
@@ -127,13 +127,14 @@ function cgsStop(templateData) {
 }
 
 function cgsAuto(templateData) {
+    const slot = templateData.slot;
     const duration = templateData.duration * 1000;
-    log.debug(`Auto-Play A Duration ${duration}ms`);
+    log.debug(`Auto-Play ${slot} Duration ${duration}ms`);
     cgsPlay(templateData);
-    log.debug('Auto-Play A: Play');
+    log.debug(`Auto-Play ${slot}: Play`);
     setTimeout(() => {
         cgsStop(templateData);
-        log.debug('Auto-Play A: Stop');
+        log.debug(`Auto-Play ${slot}: Stop`);
     }, duration);
 }
 
