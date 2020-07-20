@@ -12,7 +12,6 @@ class LowerThird {
 
     savetoDB() {
         Library.insert(this.lt, (err, newLT) => {
-            log.debug(newLT);
             if (err) {
                 log.error(err);
             }
@@ -24,7 +23,7 @@ class LowerThird {
             let result;
             Library.find({})
                 .sort({ updatedAt: -1 })
-                .limit(3)
+                .limit(nr)
                 .exec((err, docs) => {
                     result = docs;
                     if (err) {
@@ -33,6 +32,16 @@ class LowerThird {
                     }
                     resolve(result);
                 });
+        });
+    }
+
+    static clearAll() {
+        Library.remove({}, { multi: true }, (err, numRemoved) => {
+            if (err) {
+                log.error(err);
+            } else {
+                log.info(`Library cleared. ${numRemoved} item(s) removed.`);
+            }
         });
     }
 }

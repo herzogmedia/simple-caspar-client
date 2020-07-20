@@ -31,6 +31,11 @@ ipc.on('cgsConnection', (event, connection) => {
     populateCGStatus(connection);
 });
 
+//Listen for Refresh Library
+ipc.on('lib-refresh', (e) => {
+    populateLibrary();
+});
+
 // Slot A Buttons
 playA.addEventListener('click', playSlotA);
 stopA.addEventListener('click', stopSlotA);

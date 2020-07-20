@@ -199,7 +199,11 @@ const menu = [
                 label: 'Show Library'
             },
             {
-                label: 'Clear Library'
+                label: 'Clear Library',
+                click() {
+                    LowerThird.clearAll();
+                    mainWindow.webContents.send('lib-refresh');
+                }
             }
         ]
     },
