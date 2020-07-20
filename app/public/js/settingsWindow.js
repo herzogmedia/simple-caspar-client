@@ -51,7 +51,7 @@ function resetCGServerSettings(e) {
     const cgsSettings = window.resetCGSsettings();
     populateCGServerSettings(cgsSettings);
     window.cgsReconnect();
-    getCGServerTemplates();
+    reloadTemplateSettings();
 }
 
 function setCGServerSettings(e) {
@@ -63,26 +63,37 @@ function setCGServerSettings(e) {
     };
     window.setCGSsettings(newSettings);
     window.cgsReconnect();
-    getCGServerTemplates();
+    reloadTemplateSettings();
 }
 
 //----- Slot Settings ------//
 
-function populateTemplateSelects(templates) {
-    if (templates.length > 0) {
-        let options;
-        templates.forEach((template) => {
-            options += `<option>${template}</option>`;
-        });
-        cgtTemplateA.innerHTML = options;
-        cgtTemplateB.innerHTML = options;
-    }
+function populateTemplateSelects(templates, NameA, NameB) {
+    // Add Current Selection on Top
+    // A
+    let templatesA = [...templates];
+    let templatesB = [...templates];
+    templatesA.unshift(NameA);
+    templatesB.unshift(NameB);
+
+    let optionsA;
+    let optionsB;
+    templatesA.forEach((template) => {
+        optionsA += `<option>${template}</option>`;
+    });
+    templatesB.forEach((template) => {
+        optionsB += `<option>${template}</option>`;
+    });
+    cgtTemplateA.innerHTML = optionsA;
+    cgtTemplateB.innerHTML = optionsB;
 }
 
-function getCGServerTemplates() {
+function getCGServerTemplates(NameA, NameB) {
     window
         .cgsGetTemplates()
-        .then((templates) => populateTemplateSelects(templates))
+        .then((templates) => {
+            populateTemplateSelects(templates, NameA, NameB);
+        })
         .catch((err) => console.log(err));
 }
 
@@ -93,17 +104,18 @@ function getCGTemplateSettings() {
 
 function populateCGTemplateSettings(settings) {
     // Slot A
-    cgtTemplateA.value = settings.SlotA.Name;
     cgtKey1A.value = settings.SlotA.Key1;
     cgtKey2A.value = settings.SlotA.Key2;
     cgtLayerA.value = settings.SlotA.Layer;
     cgtJsonA.checked = settings.SlotA.SendJSON;
     // Slot B
-    cgtTemplateB.value = settings.SlotB.Name;
     cgtKey1B.value = settings.SlotB.Key1;
     cgtKey2B.value = settings.SlotB.Key2;
     cgtLayerB.value = settings.SlotB.Layer;
     cgtJsonB.checked = settings.SlotB.SendJSON;
+
+    // Get Server Templates
+    getCGServerTemplates(settings.SlotA.Name, settings.SlotB.Name);
 }
 
 function setCGTemplateSettings(e) {
@@ -138,9 +150,14 @@ function resetCGTemplateSettings(e) {
 function initializeSettingsWindow() {
     const cgsSettings = getCGServerSettings();
     populateCGServerSettings(cgsSettings);
-    getCGServerTemplates();
     const cgtSettings = getCGTemplateSettings();
     populateCGTemplateSettings(cgtSettings);
 }
+
+function reloadTemplateSettings() {
+    const cgtSettings = getCGTemplateSettings();
+    populateCGTemplateSettings(cgtSettings);
+}
+
 // Initialize on Load
 initializeSettingsWindow();

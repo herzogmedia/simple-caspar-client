@@ -56,7 +56,6 @@ function cgsGetTemplates() {
         if (CG.connected) {
             CG.tls()
                 .then((res) => {
-                    templates.push('');
                     const data = res.response.data;
                     data.forEach((item) => {
                         if (item.type === 'template') {
