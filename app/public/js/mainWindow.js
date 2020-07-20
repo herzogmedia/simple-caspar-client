@@ -23,6 +23,7 @@ const autoB = document.querySelector('#auto-b');
 const line1B = document.querySelector('#b-line1');
 const line2B = document.querySelector('#b-line2');
 const durationB = document.querySelector('#b-ap-interval');
+const addLibB = document.querySelector('#add-lib-b');
 
 //----- Event Listeners ------//
 // Listen for Status Changes
@@ -40,6 +41,7 @@ addLibA.addEventListener('click', addLibSlotA);
 playB.addEventListener('click', playSlotB);
 stopB.addEventListener('click', stopSlotB);
 autoB.addEventListener('click', autoSlotB);
+addLibB.addEventListener('click', addLibSlotB);
 
 //-----Playout Function SLOT A -------//
 
@@ -111,6 +113,16 @@ function autoSlotB(e) {
         duration: parseInt(durationB.value)
     };
     ipc.send('cg-auto', playData);
+}
+
+function addLibSlotB(e) {
+    e.preventDefault();
+    const data = {
+        line1: line1B.value,
+        line2: line2B.value
+    };
+    ipc.send('lib-add', data);
+    populateLibrary();
 }
 
 // populate Status Fields
