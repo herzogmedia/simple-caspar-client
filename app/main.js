@@ -1,8 +1,8 @@
 const electron = require('electron');
 const log = require('electron-log');
-const settings = require('./import/settings');
 const path = require('path');
 const CG = require('./import/casparcg');
+const LowerThird = require('./import/lowerThird');
 const {
     cgsReconnect,
     cgsConnectionHandler,
@@ -135,6 +135,19 @@ ipc.on('cg-stop', (event, arg) => {
 
 ipc.on('cg-auto', (event, arg) => {
     cgsAuto(arg);
+});
+
+ipc.on('lib-add', (event, arg) => {
+    const LT = new LowerThird(arg.line1, arg.line2);
+    LT.savetoDB();
+});
+
+ipc.on('lib-getLatest', (event, arg) => {
+    if (typeof arg === 'number') {
+        LowerThird.getLatest(arg).then((result) => {
+            event.returnValue = result;
+        });
+    }
 });
 
 // Listen for CG-Connection Change
