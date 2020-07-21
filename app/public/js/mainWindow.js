@@ -164,15 +164,27 @@ function handleLibraryClicks(e) {
             libRemoveItem(e);
             break;
         case 'load-a':
-            loadLibtoSlot(e, 'a');
-            console.log('here');
+            loadItemtoSlot(e, 'a');
             break;
         case 'load-b':
-            loadLibtoSlot(e, 'b');
-            console.log('there');
+            loadItemtoSlot(e, 'b');
             break;
         default:
             break;
+    }
+}
+
+function loadItemtoSlot(e, slot) {
+    const id = getIDfromElement(e.target);
+    const lt = ipc.sendSync('lib-getItem', id);
+    if (slot === 'a') {
+        line1A.value = lt.line1;
+        line2A.value = lt.line2;
+    } else if (slot === 'b') {
+        line1B.value = lt.line1;
+        line2B.value = lt.line2;
+    } else {
+        console.log('Error: Slot is neither A nor B.');
     }
 }
 

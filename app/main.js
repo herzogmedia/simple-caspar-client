@@ -154,6 +154,12 @@ ipc.on('lib-getLatest', (event, arg) => {
     }
 });
 
+ipc.on('lib-getItem', (event, arg) => {
+    LowerThird.getItem(arg).then((result) => {
+        event.returnValue = result;
+    });
+});
+
 ipc.on('lib-remove', (event, arg) => {
     LowerThird.removeLT(arg);
 });

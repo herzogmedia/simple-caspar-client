@@ -18,6 +18,21 @@ class LowerThird {
         });
     }
 
+    static getItem(id) {
+        return new Promise((resolve, reject) => {
+            let result;
+            const query = { _id: id };
+            Library.findOne(query, (err, docs) => {
+                result = docs;
+                if (err) {
+                    log.err(err);
+                    reject('Error getting Data');
+                }
+                resolve(result);
+            });
+        });
+    }
+
     static getLatest(nr) {
         return new Promise((resolve, reject) => {
             let result;
