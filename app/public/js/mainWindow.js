@@ -1,4 +1,5 @@
 const ipc = require('electron').ipcRenderer;
+const { dialog } = require('electron').remote;
 
 //----- Selectors ------//
 // Status
@@ -25,6 +26,9 @@ const line2B = document.querySelector('#b-line2');
 const durationB = document.querySelector('#b-ap-interval');
 const addLibB = document.querySelector('#add-lib-b');
 
+// Library
+const libraryList = document.querySelector('#library-hits');
+
 //----- Event Listeners ------//
 // Listen for Status Changes
 ipc.on('cgsConnection', (event, connection) => {
@@ -47,6 +51,9 @@ playB.addEventListener('click', playSlotB);
 stopB.addEventListener('click', stopSlotB);
 autoB.addEventListener('click', autoSlotB);
 addLibB.addEventListener('click', addLibSlotB);
+
+// Library
+libraryList.addEventListener('click', handleLibraryClicks);
 
 //-----Playout Function SLOT A -------//
 
@@ -148,12 +155,59 @@ function populateCGStatus(connection) {
 
 // ------- Library ----------//
 
-const libraryTable = document.querySelector('#library-hits');
+// Handle Clicks on Library Items
+function handleLibraryClicks(e) {
+    e.preventDefault;
+    // console.log(e.target.id, e.target.tagName);
+    switch (e.target.id) {
+        case 'remove':
+            libRemoveItem(e);
+            break;
+        case 'load-a':
+            loadLibtoSlot(e, 'a');
+            console.log('here');
+            break;
+        case 'load-b':
+            loadLibtoSlot(e, 'b');
+            console.log('there');
+            break;
+        default:
+            break;
+    }
+}
+
+function libRemoveItem(e) {
+    const id = getIDfromElement(e.target);
+    dialog
+        .showMessageBox({
+            type: 'question',
+            buttons: ['yes', 'no'],
+            title: 'Remove Item',
+            message: 'Do you really want to remove the item from the Library?'
+        })
+        .then((res) => {
+            if (res.response === 0) {
+                ipc.send('lib-remove', id);
+                populateLibrary();
+            }
+        });
+}
+
+function getIDfromElement(target) {
+    let id;
+    if (target.tagName === 'I') {
+        id = target.parentElement.parentElement.parentElement.id;
+    } else {
+        id = target.parentElement.parentElement.id;
+    }
+    return id;
+}
+
 const secondaryContent = `<div class="secondary-content">
-<button class="btn-small waves-effect blue-grey"> <i class="material-icons">arrow_upward</i>Load A</button>
-<button class="btn-small waves-effect blue-grey"><i class="material-icons">arrow_upward</i>Load B</button>
-<button class="btn-floating indigo darken-3"><i class="material-icons">edit</i></button>
-<button class="btn-floating red darken-3"><i class="material-icons">clear</i></button>
+<button id="load-a" class="btn-small waves-effect blue-grey"><i id="load-a" class="material-icons">arrow_upward</i>Load A</button>
+<button id="load-b" class="btn-small waves-effect blue-grey"><i id="load-b" class="material-icons">arrow_upward</i>Load B</button>
+<button id="edit" class="btn-floating indigo darken-3"><i id="edit" class="material-icons">edit</i></button>
+<button id="remove" class="btn-floating red darken-3"><i id="remove" class="material-icons">clear</i></button>
 </div>`;
 
 // Populate Library
@@ -171,7 +225,7 @@ function populateLibrary() {
         });
         html += '</ul>';
     }
-    libraryTable.innerHTML = html;
+    libraryList.innerHTML = html;
 }
 
 populateLibrary();

@@ -35,6 +35,17 @@ class LowerThird {
         });
     }
 
+    static removeLT(id) {
+        const query = { _id: id };
+        Library.remove(query, {}, (err, numRemoved) => {
+            if (err) {
+                log.error(err);
+            } else {
+                log.debug(`Removed ${numRemoved} Lower Third with ID ${id}`);
+            }
+        });
+    }
+
     static clearAll() {
         Library.remove({}, { multi: true }, (err, numRemoved) => {
             if (err) {

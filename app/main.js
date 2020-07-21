@@ -104,6 +104,8 @@ app.on('ready', () => {
 });
 
 //---- IPC ----//
+
+// Caspar Queries
 ipc.on('cg', (event, arg) => {
     switch (arg) {
         case 'reconnect':
@@ -125,6 +127,7 @@ ipc.on('cg', (event, arg) => {
     }
 });
 
+// Caspar Playout Commands
 ipc.on('cg-play', (event, arg) => {
     cgsPlay(arg);
 });
@@ -137,6 +140,7 @@ ipc.on('cg-auto', (event, arg) => {
     cgsAuto(arg);
 });
 
+// Library
 ipc.on('lib-add', (event, arg) => {
     const LT = new LowerThird(arg.line1, arg.line2);
     LT.savetoDB();
@@ -148,6 +152,10 @@ ipc.on('lib-getLatest', (event, arg) => {
             event.returnValue = result;
         });
     }
+});
+
+ipc.on('lib-remove', (event, arg) => {
+    LowerThird.removeLT(arg);
 });
 
 // Listen for CG-Connection Change
