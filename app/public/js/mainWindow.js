@@ -53,7 +53,7 @@ ipc.on('cgsConnection', (event, connection) => {
 
 //Listen for Refresh Library
 ipc.on('lib-refresh', (e) => {
-    populateLibrary();
+    populateLibLatest();
 });
 
 // Slot A Buttons

@@ -13,7 +13,7 @@ const {
     cgsAuto
 } = require('./import/cgs-helpers');
 
-const { app, BrowserWindow, Menu } = electron;
+const { app, BrowserWindow, Menu, dialog } = electron;
 const ipc = electron.ipcMain;
 
 // Set env
@@ -162,7 +162,6 @@ ipc.on('lib-getItem', (event, arg) => {
 
 ipc.on('lib-search', (event, arg) => {
     LowerThird.search(arg, 3).then((result) => {
-        // console.log(result);
         event.returnValue = result;
     });
 });
@@ -220,14 +219,26 @@ const menu = [
     {
         label: 'Library',
         submenu: [
-            {
-                label: 'Show Library'
-            },
+            // {
+            //     label: 'Show Library'
+            // },
             {
                 label: 'Clear Library',
                 click() {
-                    LowerThird.clearAll();
-                    mainWindow.webContents.send('lib-refresh');
+                    dialog
+                        .showMessageBox({
+                            type: 'question',
+                            buttons: ['yes', 'no'],
+                            title: 'Clear Library',
+                            message:
+                                'Do you really want to remove all items from the Library?'
+                        })
+                        .then((res) => {
+                            if (res.response === 0) {
+                                LowerThird.clearAll();
+                                mainWindow.webContents.send('lib-refresh');
+                            }
+                        });
                 }
             }
         ]
