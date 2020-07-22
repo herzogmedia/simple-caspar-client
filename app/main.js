@@ -32,7 +32,7 @@ let settingsWindow;
 function createMainWindow() {
     mainWindow = new BrowserWindow({
         title: 'Simple Caspar Client',
-        width: isDev ? 1800 : 1100,
+        width: isDev ? 1800 : 1215,
         height: 850,
         // icon: './assets/icons/icon.png',
         resizable: isDev ? true : false,
@@ -54,7 +54,7 @@ function createMainWindow() {
 function createSettingsWindow() {
     settingsWindow = new BrowserWindow({
         title: 'Settings',
-        width: isDev ? 1050 : 350,
+        width: isDev ? 1050 : 400,
         height: 850,
         resizable: isDev ? true : false,
         backgroundColor: 'white',
