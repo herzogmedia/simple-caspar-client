@@ -47,6 +47,21 @@ select:focus {
     outline: 1px solid #ffa500;
 }
 
+/* Change Colors for Search bar */
+
+.input-field input[type='search']:not(.browser-default) {
+    color: white;
+}
+
+.input-field input[type='search']:focus:not(.browser-default) {
+    background-color: #636363;
+    color: white;
+}
+
+input[type='search']:not(.browser-default) {
+    padding: 0.1em 0;
+}
+
 /* Smaller Text */
 
 p.smaller {
