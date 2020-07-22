@@ -284,6 +284,50 @@
             <!-- End Status Card-->
         </div>
         <!-- End Grid -->
+        <!-- Edit Modal -->
+        <div id="edit-modal" class="modal grey darken-3 white-text">
+            <div class="modal-content">
+                <h5 class="m-down">Edit Lower Third</h5>
+                <form id="lt-edit">
+                    <div class="input-field">
+                        <input
+                            type="text"
+                            id="edit-line1"
+                            class="white-text"
+                            placeholder=" "
+                        />
+                        <label for="edit-line1">Line 1</label>
+                    </div>
+                    <div class="input-field">
+                        <input
+                            type="text"
+                            id="edit-line2"
+                            class="white-text"
+                            placeholder=" "
+                        />
+                        <label for="edit-line2">Line 2</label>
+                    </div>
+                </form>
+                <div class="sec-content grey-text text-lighten-2">
+                    <p class="smaller">
+                        Created: <span id="created-at"></span> <br />
+                        Changed: <span id="updated-at"></span>
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer grey darken-3">
+                <button
+                    class="modal-close btn waves-effect grey"
+                    id="edit-discard"
+                >
+                    <i class="material-icons right">close</i>BACK
+                </button>
+                <button class="btn waves-effect red darken-3" id="edit-save">
+                    <i class="material-icons right">save</i>
+                    SAVE
+                </button>
+            </div>
+        </div>
     </body>
 
     <!-- Import Materialize Javascript -->

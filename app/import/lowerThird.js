@@ -50,6 +50,20 @@ class LowerThird {
         });
     }
 
+    static updateLT(data) {
+        const query = { _id: data.id };
+        const update = { line1: data.line1, line2: data.line2 };
+        Library.update(query, update, {}, (err, numAffected) => {
+            if (err) {
+                log.error(err);
+            } else {
+                log.debug(
+                    `Updated ${numAffected} Lower Third with ID ${data.id}`
+                );
+            }
+        });
+    }
+
     static removeLT(id) {
         const query = { _id: id };
         Library.remove(query, {}, (err, numRemoved) => {

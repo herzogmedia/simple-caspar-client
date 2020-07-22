@@ -29,6 +29,19 @@ const addLibB = document.querySelector('#add-lib-b');
 // Library
 const libraryList = document.querySelector('#library-hits');
 
+// Modal
+const editModal = document.querySelector('#edit-modal');
+const line1Edit = document.querySelector('#edit-line1');
+const line2Edit = document.querySelector('#edit-line2');
+const createdAtEdit = document.querySelector('#created-at');
+const updatedAtEdit = document.querySelector('#updated-at');
+const idholderEdit = document.querySelector('.sec-content');
+const modalSaveBtn = document.querySelector('#edit-save');
+
+// Initialize Modal
+const modalOptions = {};
+const editModalInstance = M.Modal.init(editModal, modalOptions);
+
 //----- Event Listeners ------//
 // Listen for Status Changes
 ipc.on('cgsConnection', (event, connection) => {
@@ -54,6 +67,7 @@ addLibB.addEventListener('click', addLibSlotB);
 
 // Library
 libraryList.addEventListener('click', handleLibraryClicks);
+modalSaveBtn.addEventListener('click', libUpdateItem);
 
 //-----Playout Function SLOT A -------//
 
@@ -164,28 +178,57 @@ function handleLibraryClicks(e) {
             libRemoveItem(e);
             break;
         case 'load-a':
-            loadItemtoSlot(e, 'a');
+            loadItemtoForm(e, 'a');
             break;
         case 'load-b':
-            loadItemtoSlot(e, 'b');
+            loadItemtoForm(e, 'b');
+            break;
+        case 'edit':
+            loadItemtoForm(e, 'edit');
             break;
         default:
             break;
     }
 }
 
-function loadItemtoSlot(e, slot) {
+function loadItemtoForm(e, slot) {
     const id = getIDfromElement(e.target);
     const lt = ipc.sendSync('lib-getItem', id);
-    if (slot === 'a') {
-        line1A.value = lt.line1;
-        line2A.value = lt.line2;
-    } else if (slot === 'b') {
-        line1B.value = lt.line1;
-        line2B.value = lt.line2;
-    } else {
-        console.log('Error: Slot is neither A nor B.');
+    switch (slot) {
+        case 'a':
+            line1A.value = lt.line1;
+            line2A.value = lt.line2;
+            break;
+        case 'b':
+            line1B.value = lt.line1;
+            line2B.value = lt.line2;
+            break;
+        case 'edit':
+            editModalInstance.open();
+            line1Edit.value = lt.line1;
+            line2Edit.value = lt.line2;
+            createdAtEdit.textContent = lt.createdAt.toLocaleString('en-GB');
+            updatedAtEdit.textContent = lt.updatedAt.toLocaleString('en-GB');
+            idholderEdit.id = lt._id;
+            break;
+        default:
+            console.log('Error: Slot is not defined correctly.');
     }
+}
+
+function libUpdateItem(e) {
+    e.preventDefault();
+    const id = idholderEdit.id;
+    const line1 = line1Edit.value;
+    const line2 = line2Edit.value;
+    const updatedItem = {
+        id,
+        line1,
+        line2
+    };
+    ipc.send('lib-updateItem', updatedItem);
+    populateLibrary();
+    editModalInstance.close();
 }
 
 function libRemoveItem(e) {
@@ -218,7 +261,7 @@ function getIDfromElement(target) {
 const secondaryContent = `<div class="secondary-content">
 <button id="load-a" class="btn-small waves-effect blue-grey"><i id="load-a" class="material-icons">arrow_upward</i>Load A</button>
 <button id="load-b" class="btn-small waves-effect blue-grey"><i id="load-b" class="material-icons">arrow_upward</i>Load B</button>
-<button id="edit" class="btn-floating indigo darken-3"><i id="edit" class="material-icons">edit</i></button>
+<button id="edit" data-target="edit-modal" class="btn-floating modal-trigger indigo darken-3"><i id="edit" class="material-icons">edit</i></button>
 <button id="remove" class="btn-floating red darken-3"><i id="remove" class="material-icons">clear</i></button>
 </div>`;
 

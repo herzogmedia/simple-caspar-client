@@ -160,6 +160,10 @@ ipc.on('lib-getItem', (event, arg) => {
     });
 });
 
+ipc.on('lib-updateItem', (event, arg) => {
+    LowerThird.updateLT(arg);
+});
+
 ipc.on('lib-remove', (event, arg) => {
     LowerThird.removeLT(arg);
 });
