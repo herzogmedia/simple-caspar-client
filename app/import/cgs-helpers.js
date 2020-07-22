@@ -138,6 +138,15 @@ function cgsAuto(templateData) {
     }, duration);
 }
 
+function cgsClear() {
+    const layerA = settings.get('cgtTemplate.SlotA.Layer');
+    const layerB = settings.get('cgtTemplate.SlotB.Layer');
+    if (layerA !== layerB) {
+        CG.cgClear(1, layerB);
+    }
+    CG.cgClear(1, layerA);
+}
+
 //Exports
 module.exports.cgsReconnect = cgsReconnect;
 module.exports.cgsConnectionHandler = cgsConnectionHandler;
@@ -146,3 +155,4 @@ module.exports.cgsGetTemplates = cgsGetTemplates;
 module.exports.cgsPlay = cgsPlay;
 module.exports.cgsStop = cgsStop;
 module.exports.cgsAuto = cgsAuto;
+module.exports.cgsClear = cgsClear;

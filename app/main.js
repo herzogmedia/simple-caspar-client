@@ -10,7 +10,8 @@ const {
     cgsGetTemplates,
     cgsPlay,
     cgsStop,
-    cgsAuto
+    cgsAuto,
+    cgsClear
 } = require('./import/cgs-helpers');
 
 const { app, BrowserWindow, Menu, dialog } = electron;
@@ -206,7 +207,10 @@ const menu = [
         label: 'CG-Server',
         submenu: [
             {
-                label: 'Clear CG-Channels'
+                label: 'Clear CG-Layers',
+                click() {
+                    cgsClear();
+                }
             },
             {
                 label: 'Reconnect CG-Server',
