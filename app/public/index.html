@@ -223,15 +223,21 @@
                     <div class="card-content white-text">
                         <span class="card-title">Library Search</span>
                         <div class="nav-wrapper grey darken-2">
-                            <form>
+                            <form id="lib-search-form">
                                 <div class="input-field">
-                                    <input type="search" id="search" required />
-                                    <label for="search" class="label-icon"
+                                    <input
+                                        type="search"
+                                        id="lib-search"
+                                        required
+                                    />
+                                    <label for="lib-search" class="label-icon"
                                         ><i class="material-icons"
                                             >search</i
                                         ></label
                                     >
-                                    <i class="material-icons">close</i>
+                                    <i id="close-search" class="material-icons"
+                                        >close</i
+                                    >
                                 </div>
                             </form>
                         </div>

@@ -50,6 +50,24 @@ class LowerThird {
         });
     }
 
+    static search(string, nr) {
+        return new Promise((resolve, reject) => {
+            let result;
+            const exp = new RegExp(string);
+            const query = { $or: [{ line1: exp }, { line2: exp }] };
+            Library.find(query)
+                .limit(nr)
+                .exec((err, docs) => {
+                    result = docs;
+                    if (err) {
+                        log.error(err);
+                        reject('Error getting Data');
+                    }
+                    resolve(result);
+                });
+        });
+    }
+
     static updateLT(data) {
         const query = { _id: data.id };
         const update = { line1: data.line1, line2: data.line2 };

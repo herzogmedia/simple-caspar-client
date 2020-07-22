@@ -160,6 +160,13 @@ ipc.on('lib-getItem', (event, arg) => {
     });
 });
 
+ipc.on('lib-search', (event, arg) => {
+    LowerThird.search(arg, 3).then((result) => {
+        // console.log(result);
+        event.returnValue = result;
+    });
+});
+
 ipc.on('lib-updateItem', (event, arg) => {
     LowerThird.updateLT(arg);
 });

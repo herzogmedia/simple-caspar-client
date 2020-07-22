@@ -28,6 +28,9 @@ const addLibB = document.querySelector('#add-lib-b');
 
 // Library
 const libraryList = document.querySelector('#library-hits');
+const libSearchForm = document.querySelector('#lib-search-form');
+const libSearch = document.querySelector('#lib-search');
+const libSearchCloseBtn = document.querySelector('#close-search');
 
 // Modal
 const editModal = document.querySelector('#edit-modal');
@@ -66,8 +69,12 @@ autoB.addEventListener('click', autoSlotB);
 addLibB.addEventListener('click', addLibSlotB);
 
 // Library
+libSearch.addEventListener('keyup', libSearchItems);
+libSearchCloseBtn.addEventListener('click', libSearchClose);
 libraryList.addEventListener('click', handleLibraryClicks);
 modalSaveBtn.addEventListener('click', libUpdateItem);
+// Prevent Reload on Enter
+libSearchForm.addEventListener('submit', (e) => e.preventDefault());
 
 //-----Playout Function SLOT A -------//
 
@@ -107,7 +114,7 @@ function addLibSlotA(e) {
         line2: line2A.value
     };
     ipc.send('lib-add', data);
-    populateLibrary();
+    populateLibLatest();
 }
 
 //-----Playout Function SLOT B -------//
@@ -148,7 +155,7 @@ function addLibSlotB(e) {
         line2: line2B.value
     };
     ipc.send('lib-add', data);
-    populateLibrary();
+    populateLibLatest();
 }
 
 // populate Status Fields
@@ -168,6 +175,23 @@ function populateCGStatus(connection) {
 }
 
 // ------- Library ----------//
+
+function libSearchItems(e) {
+    e.preventDefault();
+    const searchString = libSearch.value;
+    if (searchString.length > 0) {
+        const lowerThirds = ipc.sendSync('lib-search', searchString);
+        populateLibrary(lowerThirds, false);
+    } else {
+        populateLibLatest();
+    }
+}
+
+function libSearchClose(e) {
+    e.preventDefault();
+    libSearch.value = '';
+    populateLibLatest();
+}
 
 // Handle Clicks on Library Items
 function handleLibraryClicks(e) {
@@ -227,7 +251,7 @@ function libUpdateItem(e) {
         line2
     };
     ipc.send('lib-updateItem', updatedItem);
-    populateLibrary();
+    populateLibLatest();
     editModalInstance.close();
 }
 
@@ -243,7 +267,7 @@ function libRemoveItem(e) {
         .then((res) => {
             if (res.response === 0) {
                 ipc.send('lib-remove', id);
-                populateLibrary();
+                populateLibLatest();
             }
         });
 }
@@ -266,11 +290,12 @@ const secondaryContent = `<div class="secondary-content">
 </div>`;
 
 // Populate Library
-function populateLibrary() {
-    const lowerThirds = ipc.sendSync('lib-getLatest', 3);
+function populateLibrary(lowerThirds, latest) {
     let html;
-    if (lowerThirds.length < 1) {
+    if (lowerThirds.length < 1 && latest) {
         html = '<h6><em>The Library is currently empty.</em></h6></br>';
+    } else if (lowerThirds.length < 1 && !latest) {
+        html = '<h6><em>No matching Lower Thirds found. Sorry!</em></h6></br>';
     } else {
         html = '<ul class="collection grey darken-3" style="border: none;">';
         lowerThirds.forEach((lt) => {
@@ -283,4 +308,9 @@ function populateLibrary() {
     libraryList.innerHTML = html;
 }
 
-populateLibrary();
+function populateLibLatest() {
+    const lowerThirds = ipc.sendSync('lib-getLatest', 3);
+    populateLibrary(lowerThirds, true);
+}
+
+populateLibLatest();
