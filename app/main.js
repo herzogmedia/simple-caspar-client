@@ -1,6 +1,12 @@
 const electron = require('electron');
 const log = require('electron-log');
 const path = require('path');
+const {
+    showAboutWindow,
+    openUrlMenuItem,
+    openNewGitHubIssue
+} = require('electron-util');
+
 const CG = require('./import/casparcg');
 const LowerThird = require('./import/lowerThird');
 const {
@@ -256,7 +262,41 @@ const menu = [
                   ]
               }
           ]
-        : [])
+        : []),
+    {
+        label: 'Help',
+        submenu: [
+            openUrlMenuItem({
+                label: 'Documentation',
+                url: 'https://github.com/herzogmedia/simple-caspar-client'
+            }),
+            {
+                label: 'File an Issue',
+                click() {
+                    openNewGitHubIssue({
+                        user: 'herzogmedia',
+                        repo: 'simple-caspar-client',
+                        body:
+                            'Please provide a precise description of the bug or feature request here.'
+                    });
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'About',
+                click() {
+                    showAboutWindow({
+                        icon: path.join(__dirname, 'assets/Icon.png'),
+                        copyright: '© 2020, Lukas Herzog',
+                        text:
+                            'Published under MIT Licence with use of electron, materialize.css and CasparCG-Connection.'
+                    });
+                }
+            }
+        ]
+    }
 ];
 
 // Quit app and disconnect if all windows are closed
