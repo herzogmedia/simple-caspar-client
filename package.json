@@ -16,6 +16,10 @@
     ],
     "author": "Lukas Herzog",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/herzogmedia/simple-caspar-client/"
+    },
     "devDependencies": {
         "cross-env": "^7.0.2",
         "electron": "^8.4.1",
