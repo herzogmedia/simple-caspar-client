@@ -42,7 +42,8 @@ function createMainWindow() {
         backgroundColor: 'white',
         webPreferences: {
             contextIsolation: false,
-            nodeIntegration: true
+            nodeIntegration: true,
+            enableRemoteModule: true
         }
     });
 
@@ -64,6 +65,7 @@ function createSettingsWindow() {
         webPreferences: {
             contextIsolation: false,
             nodeIntegration: false,
+            enableRemoteModule: true,
             preload: path.join(__dirname, 'import', 'preload-settings.js')
         }
     });
